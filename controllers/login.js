@@ -27,7 +27,7 @@ exports.login = (req, res, next) => {
         maxAge: 3600000,
         httpOnly: true,
         sameSite: 'None',
-        //// secure: process.env.NODE_ENV === 'production',
+        secure: process.env.NODE_ENV === 'production',
       });
       res.status(200).send({ message: 'Вы авторизовались!' });
     })

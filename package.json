@@ -24,7 +24,7 @@
     "eslint-plugin-import": "^2.22.1"
   },
   "scripts": {
-    "deploy": "scp -r ./.env/* alexv22@178.154.194.89:/home/alexv22/backend/",
+    "deploy": "scp .env alexv22@178.154.194.89:/home/alexv22/backend/",
     "start": "node app.js",
     "dev": "nodemon app.js",
     "lint": "npx eslint --fix"
