@@ -17,6 +17,7 @@ const { createUser } = require('./controllers/users');
 const { auth } = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { processingCorsRequests } = require('./middlewares/cors-request');
+const { centralizedHandler } = require('./middlewares/сentralized-handler');
 
 const {
   valReqCreateUser,
@@ -58,12 +59,8 @@ app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.post('/signin', valReqLogin, login);
 app.post('/signup', valReqCreateUser, createUser);
-app.post('/signout', (req, res) => {
-  res.clearCookie('jwt');
-  res.send('cookie cleared');
-});
+app.post('/signin', valReqLogin, login);
 
 app.use(cookieParser());
 app.use('/', auth, routes);
@@ -76,14 +73,4 @@ app.use(errorLogger);
 
 app.use(errors());
 
-// eslint-disable-next-line no-unused-vars
-app.use((err, req, res, next) => {
-  const { statusCode = 500, message } = err;
-  res
-    .status(statusCode)
-    .send({
-      message: statusCode === 500
-        ? 'На сервере произошла ошибка'
-        : message,
-    });
-});
+app.use(centralizedHandler);

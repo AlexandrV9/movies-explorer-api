@@ -11,7 +11,7 @@ const incorrectEmailOrPassword = new BadRequestError('Неправильные �
 const notFoundUserError = new NotFoundError('Пользователь по указанному id не найден');
 const notFoundMovieError = new NotFoundError('Фильм с указанным id не найден');
 const notFoundRouteError = new NotFoundError('Маршрут не найден');
-const forbiddenCardDeleteError = new ForbiddenError('Это не ваша карточка, вы не можете её удалить');
+const forbiddenMovieDeleteError = new ForbiddenError('Это не ваш фильм, вы не можете его удалить');
 const unauthorizedError = new UnauthorizedError('Чтобы пользоваться методами сервера, сначала пройдите авторизацию');
 const conflictError = new ConflictError('Пользователь с такой почтой уже существует');
 
@@ -28,7 +28,7 @@ module.exports = {
   incorrectEmailOrPassword,
   notFoundUserError,
   notFoundMovieError,
-  forbiddenCardDeleteError,
+  forbiddenMovieDeleteError,
   unauthorizedError,
   conflictError,
   notFoundRouteError,

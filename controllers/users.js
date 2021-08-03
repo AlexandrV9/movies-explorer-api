@@ -9,7 +9,10 @@ exports.getUserInfo = (req, res, next) => {
   User
     .findById(req.user._id)
     .orFail(() => notFoundUserError)
-    .then((user) => res.send(user))
+    .then((user) => res.send({
+      name: user.name,
+      email: user.email,
+    }))
     .catch((err) => next(err));
 };
 
@@ -27,12 +30,15 @@ exports.createUser = (req, res, next) => {
       email,
       password: hash,
     }))
-    .then((user) => res.status(201).send(user))
+    .then((user) => res.status(201).send({
+      name: user.name,
+      email: user.email,
+    }))
     .catch((err) => {
       if (err.name === 'MongoError' && err.code === 11000) {
         next(conflictError);
       }
-      next();
+      next(err);
     });
 };
 
@@ -45,6 +51,9 @@ exports.updateUserProfile = (req, res, next) => {
         runValidators: true,
       })
     .orFail(() => notFoundUserError)
-    .then((user) => res.send(user))
+    .then((user) => res.send({
+      name: user.name,
+      email: user.email,
+    }))
     .catch((err) => next(err));
 };

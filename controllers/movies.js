@@ -2,6 +2,7 @@ const { Movie } = require('../models/Movie');
 const {
   badRequestError,
   notFoundMovieError,
+  forbiddenMovieDeleteError,
 } = require('../utils/utils');
 
 exports.getAllMovies = (req, res, next) => {
@@ -47,8 +48,19 @@ exports.createMovie = (req, res, next) => {
 };
 
 exports.deleteMovieById = (req, res, next) => {
-  Movie.findByIdAndRemove(req.params.movieId)
+  const { movieId } = req.params;
+  const userId = req.user._id;
+  Movie
+    .findById(movieId)
     .orFail(() => notFoundMovieError)
-    .then((movie) => res.send(movie))
+    .then((movie) => {
+      const ownerId = movie.owner.toString();
+      if (ownerId === userId) {
+        movie.remove();
+        res.send({ message: 'Карточка успешно удалена' });
+      } else {
+        throw forbiddenMovieDeleteError;
+      }
+    })
     .catch((err) => next(err));
 };
