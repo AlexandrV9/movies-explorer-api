@@ -5,6 +5,10 @@ const {
   forbiddenMovieDeleteError,
 } = require('../utils/utils');
 
+const {
+  textFilmWasCreated,
+} = require('../utils/constants');
+
 exports.getAllMovies = (req, res, next) => {
   Movie
     .find({})
@@ -56,11 +60,10 @@ exports.deleteMovieById = (req, res, next) => {
     .then((movie) => {
       const ownerId = movie.owner.toString();
       if (ownerId === userId) {
-        movie.remove();
-        res.send({ message: 'Карточка успешно удалена' });
-      } else {
-        throw forbiddenMovieDeleteError;
+        return movie.remove()
+          .then(() => res.status(200).send({ message: textFilmWasCreated }));
       }
+      throw forbiddenMovieDeleteError;
     })
     .catch((err) => next(err));
 };

@@ -5,6 +5,10 @@ const {
   notFoundUserError,
 } = require('../utils/utils');
 
+const {
+  textMongoError,
+} = require('../utils/constants');
+
 exports.getUserInfo = (req, res, next) => {
   User
     .findById(req.user._id)
@@ -35,7 +39,7 @@ exports.createUser = (req, res, next) => {
       email: user.email,
     }))
     .catch((err) => {
-      if (err.name === 'MongoError' && err.code === 11000) {
+      if (err.name === textMongoError && err.code === 11000) {
         next(conflictError);
       }
       next(err);
@@ -55,5 +59,10 @@ exports.updateUserProfile = (req, res, next) => {
       name: user.name,
       email: user.email,
     }))
-    .catch((err) => next(err));
+    .catch((err) => {
+      if (err.name === textMongoError && err.code === 11000) {
+        next(conflictError);
+      }
+      next(err);
+    });
 };

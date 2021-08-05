@@ -1,4 +1,4 @@
-const validatorEmail = require('validator');
+const validator = require('validator');
 
 const mongoose = require('mongoose');
 
@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
     unique: true,
     validate: {
       validator(eml) {
-        return validatorEmail.isEmail(eml);
+        return validator.isEmail(eml);
       },
     },
   },

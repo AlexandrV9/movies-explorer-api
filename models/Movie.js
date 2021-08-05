@@ -83,10 +83,3 @@ const movieSchema = new mongoose.Schema({
 });
 
 exports.Movie = mongoose.model('movie', movieSchema);
-
-// unique: true,
-// validate: {
-//   validator(eml) {
-//     return validatorEmail.isEmail(eml);
-//   },
-// },

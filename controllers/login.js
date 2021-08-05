@@ -2,6 +2,10 @@ const bcrypt = require('bcryptjs');
 const { User } = require('../models/User');
 
 const {
+  textSuccessfulAuthorization,
+} = require('../utils/constants');
+
+const {
   incorrectEmailOrPassword,
   generateAccessToken,
 } = require('../utils/utils');
@@ -30,7 +34,7 @@ exports.login = (req, res, next) => {
         sameSite: 'None',
         secure: process.env.NODE_ENV === 'production',
       });
-      res.status(200).send({ message: 'Вы авторизовались!' });
+      res.status(200).send({ message: textSuccessfulAuthorization });
     })
     .catch((err) => next(err));
 };

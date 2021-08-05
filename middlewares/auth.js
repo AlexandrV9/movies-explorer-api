@@ -7,7 +7,6 @@ const {
   unauthorizedError,
 } = require('../utils/utils');
 
-// eslint-disable-next-line consistent-return
 exports.auth = (req, res, next) => {
   const token = req.cookies.jwt;
   let payload;

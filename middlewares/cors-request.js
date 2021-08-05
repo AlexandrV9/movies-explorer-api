@@ -1,10 +1,12 @@
 const allowedCors = [
-  'https://front.mesto.nomoredomains.rocks',
-  'http://front.mesto.nomoredomains.rocks',
+  'http://movies.explorer.alexv.nomoredomains.club/',
+  'http://movies.explorer.alexv.nomoredomains.club',
   'localhost:3000',
 ];
 
-const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
+const {
+  DEFAULT_ALLOWED_METHODS,
+} = require('../utils/constants');
 
 const processingCorsRequests = (req, res, next) => {
   const { method } = req;

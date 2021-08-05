@@ -1,6 +1,11 @@
 const { celebrate, Joi } = require('celebrate');
+const validator = require('validator');
 
-const regExp = /^((https:\/\/)|(http:\/\/))(www.)?(\w|\W)+/;
+const {
+  textInvalidURLImage,
+  textInvalidURLTrailer,
+  textInvalidURLThumbnail,
+} = require('../utils/constants');
 
 const valReqCreateMovie = celebrate({
   body: Joi.object().keys({
@@ -9,9 +14,24 @@ const valReqCreateMovie = celebrate({
     duration: Joi.required(),
     year: Joi.number().integer(),
     description: Joi.string().required(),
-    image: Joi.string().regex(regExp).required(),
-    trailer: Joi.string().regex(regExp).required(),
-    thumbnail: Joi.string().regex(regExp).required(),
+    image: Joi.string().required().custom((value, helpers) => {
+      if (validator.isURL(value)) {
+        return value;
+      }
+      return helpers.error(textInvalidURLImage);
+    }),
+    trailer: Joi.string().required().custom((value, helpers) => {
+      if (validator.isURL(value)) {
+        return value;
+      }
+      return helpers.error(textInvalidURLTrailer);
+    }),
+    thumbnail: Joi.string().required().custom((value, helpers) => {
+      if (validator.isURL(value)) {
+        return value;
+      }
+      return helpers.error(textInvalidURLThumbnail);
+    }),
     movieId: Joi.required(),
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
@@ -20,19 +40,19 @@ const valReqCreateMovie = celebrate({
 
 const valReqMovieId = celebrate({
   params: Joi.object().keys({
-    movieId: Joi.string().alphanum().length(24),
+    movieId: Joi.string().alphanum().hex().length(24),
   }),
 });
 
 const valReqUserId = celebrate({
   params: Joi.object().keys({
-    userId: Joi.string().alphanum().length(24),
+    userId: Joi.string().alphanum().hex().length(24),
   }),
 });
 
 const valReqUpdateUserProfile = celebrate({
   body: Joi.object().keys({
-    name: Joi.string().required(),
+    name: Joi.string().min(2).max(30).required(),
     email: Joi.string().email().required(),
   }).or('name', 'email'),
 });
@@ -41,27 +61,16 @@ const valReqCreateUser = celebrate({
   body: Joi.object().keys({
     email: Joi.string().email().required(),
     password: Joi.string().required(),
-    name: Joi.string().required(),
+    name: Joi.string().min(2).max(30).required(),
   }),
 });
 
 const valReqLogin = celebrate({
   body: Joi.object().keys({
-    name: Joi.string().required(),
     email: Joi.string().email().required(),
     password: Joi.string().required(),
   }),
 });
-
-// Другой способ валидации (пригодится в будущем)
-// const handleValReqCreateCard = (message) => {
-//   const validateShema = Joi.object().keys({
-//     name: Joi.string().required().min(2).max(30),
-//     link: Joi.string().required(),
-//     owner: Joi.string(),
-//   });
-//   return validateShema.validate(message);
-// };
 
 module.exports = {
   valReqCreateMovie,
