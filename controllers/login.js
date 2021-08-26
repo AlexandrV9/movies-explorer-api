@@ -34,7 +34,10 @@ exports.login = (req, res, next) => {
         sameSite: 'None',
         secure: process.env.NODE_ENV === 'production',
       });
-      res.status(200).send({ message: textSuccessfulAuthorization });
+      res.status(200).send({
+        message: textSuccessfulAuthorization,
+        jwt: token,
+      });
     })
     .catch((err) => next(err));
 };
