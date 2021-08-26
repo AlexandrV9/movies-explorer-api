@@ -10,6 +10,7 @@ const {
 } = require('../utils/constants');
 
 exports.getUserInfo = (req, res, next) => {
+  // const token = req.cookies.jwt;
   User
     .findById(req.user._id)
     .orFail(() => notFoundUserError)
