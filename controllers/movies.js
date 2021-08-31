@@ -52,10 +52,10 @@ exports.createMovie = (req, res, next) => {
 };
 
 exports.deleteMovieById = (req, res, next) => {
-  const { movieId } = req.params;
+  const { id } = req.params;
   const userId = req.user._id;
   Movie
-    .findById(movieId)
+    .findOne({ movieId: id })
     .orFail(() => notFoundMovieError)
     .then((movie) => {
       const ownerId = movie.owner.toString();

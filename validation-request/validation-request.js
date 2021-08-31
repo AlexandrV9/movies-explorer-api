@@ -40,7 +40,7 @@ const valReqCreateMovie = celebrate({
 
 const valReqMovieId = celebrate({
   params: Joi.object().keys({
-    movieId: Joi.string().alphanum(),
+    id: Joi.string().alphanum(),
   }),
 });
 
