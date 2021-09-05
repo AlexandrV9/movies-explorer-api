@@ -80,6 +80,10 @@ const movieSchema = new mongoose.Schema({
     required: true,
   },
 
+  isLike: {
+    type: Boolean,
+  },
+
 });
 
 exports.Movie = mongoose.model('movie', movieSchema);

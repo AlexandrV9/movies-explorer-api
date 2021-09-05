@@ -35,6 +35,7 @@ const valReqCreateMovie = celebrate({
     movieId: Joi.required(),
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
+    isLike: Joi.boolean(),
   }),
 });
 
