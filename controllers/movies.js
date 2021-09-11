@@ -10,8 +10,9 @@ const {
 } = require('../utils/constants');
 
 exports.getAllMovies = (req, res, next) => {
+  const userId = req.user._id;
   Movie
-    .find({})
+    .find({ owner: userId })
     .then((movies) => res.send(movies))
     .catch((err) => next(err));
 };
