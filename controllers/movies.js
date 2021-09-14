@@ -56,7 +56,7 @@ exports.deleteMovieById = (req, res, next) => {
   const { id } = req.params;
   const userId = req.user._id;
   Movie
-    .findOne({ movieId: id })
+    .findById(id)
     .orFail(() => notFoundMovieError)
     .then((movie) => {
       const ownerId = movie.owner.toString();
