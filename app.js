@@ -25,12 +25,10 @@ const {
 } = process.env;
 
 async function main() {
-  await mongoose.connect(MONGO_URL, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
-    useUnifiedTopology: true,
-  });
+  await mongoose.connect(MONGO_URL,
+    function() {
+      mongoose.connection.db.dropCollection('movies');
+    });
 
   console.log('Conntected to mestodb');
 
