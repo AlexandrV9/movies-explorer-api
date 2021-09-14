@@ -12,7 +12,7 @@ const {
 exports.getAllMovies = (req, res, next) => {
   const userId = req.user._id;
   Movie
-    .find({ owner: userId })
+    .find({owner: userId})
     .then((movies) => res.send(movies))
     .catch((err) => next(err));
 };
@@ -56,15 +56,16 @@ exports.deleteMovieById = (req, res, next) => {
   const { id } = req.params;
   const userId = req.user._id;
   Movie
-    .findById(id)
-    .orFail(() => notFoundMovieError)
-    .then((movie) => {
-      const ownerId = movie.owner.toString();
-      if (ownerId === userId) {
-        return movie.remove()
-          .then(() => res.status(200).send({ message: textFilmWasCreated }));
-      }
-      throw forbiddenMovieDeleteError;
-    })
-    .catch((err) => next(err));
+  .findById(id)
+  .orFail(() => notFoundMovieError)
+  .then((movie) => {
+  const ownerId = movie.owner.toString();
+  if (ownerId === userId) {
+    return movie
+      .remove()
+      .then(() => res.status(200).send({ message: textFilmWasCreated }));
+  }
+  throw forbiddenMovieDeleteError;
+  })
+  .catch((err) => next(err));
 };

@@ -15,6 +15,6 @@ const {
 
 moviesRoutes.get('/', getAllMovies);
 moviesRoutes.post('/', valReqCreateMovie, createMovie);
-moviesRoutes.delete('/:id', valReqMovieId, deleteMovieById);
+moviesRoutes.delete('/:id', deleteMovieById);
 
 module.exports = moviesRoutes;
