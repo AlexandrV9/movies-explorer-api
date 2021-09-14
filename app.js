@@ -25,16 +25,19 @@ const {
 } = process.env;
 
 async function main() {
-  await mongoose.connect(MONGO_URL,
-    function() {
-      mongoose.connection.db.dropCollection('movies');
-    });
+  await mongoose.connect(MONGO_URL, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+    useUnifiedTopology: true,
+  });
 
   console.log('Conntected to mestodb');
 
   await app.listen(PORT);
 
   console.log(`Server listen on ${PORT}`);
+
 }
 
 main();
