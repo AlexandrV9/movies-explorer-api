@@ -83,8 +83,6 @@ const movieSchema = new mongoose.Schema({
     type: Boolean,
   },
 
-
-
 });
 
 exports.Movie = mongoose.model('movie', movieSchema);

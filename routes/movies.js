@@ -14,7 +14,7 @@ const {
 } = require('../validation-request/validation-request');
 
 moviesRoutes.get('/', getAllMovies);
-moviesRoutes.post('/', valReqCreateMovie, createMovie);
+moviesRoutes.post('/', createMovie);
 moviesRoutes.delete('/:id', valReqMovieId, deleteMovieById);
 
 module.exports = moviesRoutes;

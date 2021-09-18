@@ -6,6 +6,7 @@ const NotFoundError = require('../errors/not-found-err');
 const ConflictError = require('../errors/conflict-err');
 const UnauthorizedError = require('../errors/unauthorized-err');
 
+const invalidToken = new ForbiddenError('Невалидный токен');
 const badRequestError = new BadRequestError('Переданы некорректные данные');
 const incorrectEmailOrPassword = new BadRequestError('Неправильные почта или пароль');
 const notFoundUserError = new NotFoundError('Пользователь по указанному id не найден');
@@ -32,5 +33,6 @@ module.exports = {
   unauthorizedError,
   conflictError,
   notFoundRouteError,
+  invalidToken,
   generateAccessToken,
 };
